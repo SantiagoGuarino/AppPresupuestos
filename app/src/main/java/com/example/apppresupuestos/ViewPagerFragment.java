@@ -46,12 +46,15 @@ public class ViewPagerFragment extends Fragment {
         myDatabaseReferenceObject = (DatabaseReferenceObject) bundle.getSerializable(KEY_DATABASE_REFERENCE);
         imageUploadsList = new ArrayList<>();
         myDatabaseReference = myDatabaseReferenceObject.getDatabaseReference();
+        final ViewPager viewPagerPresupuestos = view.findViewById(R.id.view_pager_database_images);
         myDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot track: dataSnapshot.getChildren()){
                     ImageUpload imageUpload = track.getValue(ImageUpload.class);
                     imageUploadsList.add(imageUpload);
+                    ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), imageUploadsList);
+                    viewPagerPresupuestos.setAdapter(viewPagerAdapter);
                 }
             }
 
@@ -60,9 +63,8 @@ public class ViewPagerFragment extends Fragment {
                 Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        ViewPager viewPagerPresupuestos = view.findViewById(R.id.view_pager_database_images);
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), imageUploadsList);
-        viewPagerPresupuestos.setAdapter(viewPagerAdapter);
+
+
 
         return view;
     }

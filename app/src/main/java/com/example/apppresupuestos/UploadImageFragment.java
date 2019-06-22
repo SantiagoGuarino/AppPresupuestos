@@ -140,9 +140,37 @@ public class UploadImageFragment extends Fragment {
                         +"."+getFileExtension(myImageUri));
             }
             fileReference.putFile(myImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    /*//Este handler es para que el usuario pueda ver la carga en 100%
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                ImageUpload upload = new ImageUpload(uri.toString());
+                                if((fileReference.toString()).contains("ToldoPuntoRecto")){
+                                    myDatabase.child("ToldoPuntoRecto").push().setValue(upload);
+                                    Toast.makeText(getContext(), "La carga de la imagen fue exitosa", Toast.LENGTH_SHORT).show();
+                                } else if((fileReference.toString().contains("ToldoBrazoInvisible"))){
+                                    myDatabase.child("ToldoBrazoInvisible").push().setValue(upload);
+                                    Toast.makeText(getContext(), "La carga de la imagen fue exitosa", Toast.LENGTH_SHORT).show();
+                                } else if((fileReference.toString().contains("ToldoCerramiento"))){
+                                    myDatabase.child("ToldoCerramiento").push().setValue(upload);
+                                    Toast.makeText(getContext(), "La carga de la imagen fue exitosa", Toast.LENGTH_SHORT).show();
+                                } else if((fileReference.toString().contains("ToldoFijo"))){
+                                    myDatabase.child("ToldoFijo").push().setValue(upload);
+                                    Toast.makeText(getContext(), "La carga de la imagen fue exitosa", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                    }
+                  /*  fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+
+
+                    });*/
+
+                     /*//Este handler es para que el usuario pueda ver la carga en 100%
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -150,23 +178,12 @@ public class UploadImageFragment extends Fragment {
                             progressbar.setProgress(0);
                         }
                     }, 2000);*/
-                    Toast.makeText(getContext(), "La carga de la imagen fue exitosa", Toast.LENGTH_SHORT).show();
-                    ImageUpload upload = new ImageUpload(fileReference.getDownloadUrl().toString());
-                    //String uploadId = myDatabase.push().getKey;
-                    if((fileReference.toString()).contains("ToldoPuntoRecto")){
-                        myDatabase.child("ToldoPuntoRecto").push().setValue(upload);
-                    } else if((fileReference.toString().contains("ToldoBrazoInvisible"))){
-                        myDatabase.child("ToldoBrazoInvisible").push().setValue(upload);
-                    } else if((fileReference.toString().contains("ToldoCerramiento"))){
-                        myDatabase.child("ToldoCerramiento").push().setValue(upload);
-                    } else if((fileReference.toString().contains("ToldoFijo"))){
-                        myDatabase.child("ToldoFijo").push().setValue(upload);
-                    }
-                }
+
+
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getContext(), "Error al cargar la imagen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),  e.getMessage() , Toast.LENGTH_SHORT).show();
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override

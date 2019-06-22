@@ -57,7 +57,7 @@ public class SeleccionFragment extends Fragment {
         myDatabasePuntoRecto = FirebaseDatabase.getInstance().getReference("Uploads").child("ToldoPuntoRecto");
         myDatabaseCerramiento = FirebaseDatabase.getInstance().getReference("Uploads").child("ToldoCerramiento");
         myDatabaseBrazoInvisible = FirebaseDatabase.getInstance().getReference("Uploads").child("ToldoBrazoInvisible");
-        myDatabaseToldoFijo = FirebaseDatabase.getInstance().getReference("Uploads").child("ToldoBFijo");
+        myDatabaseToldoFijo = FirebaseDatabase.getInstance().getReference("Uploads").child("ToldoFijo");
         cerramiento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

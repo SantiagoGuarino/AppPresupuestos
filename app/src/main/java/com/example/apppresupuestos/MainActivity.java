@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements SeleccionFragment
     public void myDatabaseReferenceData(DatabaseReferenceObject myDatabaseReference) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(ViewPagerFragment.KEY_DATABASE_REFERENCE, myDatabaseReference);
-        recyclerViewTemporal.setArguments(bundle);
-        pegarFragment(recyclerViewTemporal);
+        viewPagerFragment.setArguments(bundle);
+        pegarFragment(viewPagerFragment);
     }
 
     @Override
